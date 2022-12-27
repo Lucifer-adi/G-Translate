@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=Trns, initial-scale=1.0" />
+    <title>Translate</title>
+  </head>
+  <style>
+
+    /* Set the font and background color for the body */
+body {
+  background-image: url(./pexels-tirachard-kumtanom-733857.jpg);
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+/* Set the font and text color for the heading */
+h1 {
+  font-size: 34px;
+  color: rgba(89, 192, 0, 0.944);
+  margin-bottom: 20px;
+}
+
+/* Set the width and height of the container element */
+#container {
+  width: 800px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+/* Set the font and text color for the input and output headings */
+h3 {
+  font-size: 18px;
+  color: rgb(69, 67, 67);
+  margin-bottom: 10px;
+}
+
+/* Set the font and text color for the input and output sections */
+#input-section, #output-section {
+  font-size: 14px;
+  color: rgb(0, 63, 151);
+  width: 45%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Set the height and width of the textarea element */
+#input-text {
+  height: 70%;
+  width: 80%;
+  Font-weight: 500;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+}
+
+/* Set the background and border color for the translate button */
+#translate-btn {
+  background-color: #0066ff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* Add a hover effect for the translate button */
+#translate-btn:hover {
+  background-color: #004cbf;
+}
+
+/* Set the font and text color for the translated text */
+#translated-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #444;
+  margin-top: 10px;
+  width: 80%;
+  height: 70%;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
+  overflow: auto;
+
+  background:wheat;
+}
+
+
+  #input-section, #output-section {
+  padding: 10px;
+  margin: 10px;
+}
+
+/* Set the padding for the translate button */
+#translate-btn {
+  padding: 10px 20px;
+}
+
+    /* old css--------------------------------------------------------------- */
+  
+  </style>
+  <body>
+    <h1>Translator</h1>
+    <div id="container">
+      <h3>Input Area</h3>
+      <div id="input-section">
+        <textarea id="input-text"></textarea><br />
+        <button onclick="translateText()" id="translate-btn">Translate</button>
+      </div>
+      
+      <h3>Output Area</h3>
+      <div id="output-section">
+        <p id="translated-text"></p>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  //getting translated data
+  async function translateText() {
+    try {
+      let input = document.getElementById("input-text").value;
+
+      let res = await fetch("https://libretranslate.de/translate", {
+        method: "POST",
+        body: JSON.stringify({
+          q: input,
+          source: "en",
+          target: "hi",
+          format: "text",
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      let data = await res.json();
+      document.getElementById('translated-text').innerText = data.translatedText;
+      console.log('translatedText', data.translatedText)
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  //now show ur data in output box. --- wrong way
+//   async function showText() {
+//     try {
+//       let output = document.getElementById("output-section").value;
+       
+//     } catch (error) {
+//       console.log("error:", error);
+//     }
+  
+</script>
